@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-dep
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:  # Corrected indentation and key
       app: backend
