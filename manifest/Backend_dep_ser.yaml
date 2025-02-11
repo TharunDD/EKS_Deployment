@@ -40,4 +40,5 @@ spec:
     - protocol: TCP
       port: 3010
       targetPort: 3010
+      nodePort: 32350
   type: ClusterIP
