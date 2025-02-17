@@ -1,0 +1,36 @@
+name: Update Backend Image Tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_id:
+        description: "New Docker Image Tag"
+        required: true
+        type: string
+
+jobs:
+  update-backend-manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Update Image Tag in Backend_dep_ser.yaml
+        run: |
+          COMMIT_ID=${{ github.event.inputs.commit_id }}
+          echo "Updating EKS_Deployment/manifest/Backend_dep_ser.yaml with new image tag: $COMMIT_ID"
+          
+          # Replace the image tag in Backend_dep_ser.yaml
+          sed -i "s|image: dtharundev/carb-backend.*|image: dtharundev/carb-backend:$COMMIT_ID|" EKS_Deployment/manifest/Backend_dep_ser.yaml
+          
+          # Show the updated file for debugging
+          cat EKS_Deployment/manifest/Backend_dep_ser.yaml
+
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add EKS_Deployment/manifest/Backend_dep_ser.yaml
+          git commit -m "Updated backend image tag to ${{ github.event.inputs.commit_id }}"
+          git push
