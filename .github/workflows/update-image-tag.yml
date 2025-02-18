@@ -22,15 +22,17 @@ jobs:
           echo "Updating EKS_Deployment/manifest/Backend_dep_ser.yaml with new image tag: $COMMIT_ID"
           
           # Replace the image tag in Backend_dep_ser.yaml
-          sed -i "s|image: dtharundev/carb-backend.*|image: dtharundev/carb-backend:$COMMIT_ID|" manifest/Backend_dep_ser.yaml
+          sed -i "s|image: dtharundev/carb-backend:.*|image: dtharundev/carb-backend:$COMMIT_ID|" manifest/Backend_dep_ser.yaml
           
           # Show the updated file for debugging
           cat manifest/Backend_dep_ser.yaml
 
       - name: Commit & Push Changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add manifest/Backend_dep_ser.yaml
-          git commit -m "Updated backend image tag to ${{ github.event.inputs.commit_id }}"
-          git push
+          git commit -m "Updated backend image tag to $COMMIT_ID"
+          git push https://x-access-token:$GH_PAT@github.com/TharunDD/EKS_Deployment.git main
