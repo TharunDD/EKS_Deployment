@@ -25,7 +25,7 @@ jobs:
           echo "Updating EKS_Deployment/manifest/Backend_dep_ser.yaml with new image tag: $COMMIT_ID"
           
           # Replace the image tag in Backend_dep_ser.yaml
-          sed -i "s|image: dtharundev/carb-backend.*|image: dtharundev/carb-backend:$COMMIT_ID|" EKS_Deployment/manifest/Backend_dep_ser.yaml
+          sed -i "s|image: dtharundev/carb-backend.*|image: dtharundev/carb-backend:$COMMIT_ID|" manifest/Backend_dep_ser.yaml
           
           # Show the updated file for debugging
           cat EKS_Deployment/manifest/Backend_dep_ser.yaml
