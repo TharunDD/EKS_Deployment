@@ -15,7 +15,10 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
+      - name: Log Commit ID
+        run: |
+          echo "Received Commit ID: ${{ github.event.inputs.commit_id }}"
+
       - name: Update Image Tag in Backend_dep_ser.yaml
         run: |
           COMMIT_ID=${{ github.event.inputs.commit_id }}
