@@ -16,6 +16,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Debug - Check if file exists
+        run: ls -R EKS_Deployment/manifest/
+        
       - name: Update Image Tag in Backend_dep_ser.yaml
         run: |
           COMMIT_ID=${{ github.event.inputs.commit_id }}
