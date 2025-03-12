@@ -15,20 +15,9 @@ spec:
     spec:
       containers:
       - name: backend
-        image: dtharundev/thecicd:latest
+        image: dtharundev/carb-backend:latest
         ports:
         - containerPort: 3010
-        env:
-        - name: DB_URL
-          valueFrom:
-            secretKeyRef:
-              name: backend-sec
-              key: DB_URL
-        - name: SEC
-          valueFrom:
-            secretKeyRef:
-              name: backend-sec
-              key: SEC
 ---
 apiVersion: v1
 kind: Service
