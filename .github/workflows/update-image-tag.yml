@@ -55,4 +55,4 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add manifest/Backend_dep_ser.yaml
           git commit -m "Updated backend image tag to $COMMIT_ID"
-          git push https://x-access-token:$GH_PAT@github.com/TharunDD/EKS_Deployment.git main
+          git push origin main
