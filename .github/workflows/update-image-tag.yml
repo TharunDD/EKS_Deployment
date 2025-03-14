@@ -15,6 +15,22 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Debug Git Info
+        run: |
+          echo "Checking current branch..."
+          git branch
+          echo "Checking remote details..."
+          git remote -v
+          echo "Checking Git status..."
+          git status
+
+      - name: Ensure Main Branch is Up-to-Date
+        run: |
+          git fetch --all
+          git checkout main
+          git pull origin main
+
       - name: Log Commit ID
         run: |
           echo "Received Commit ID: ${{ github.event.inputs.commit_id }}"
