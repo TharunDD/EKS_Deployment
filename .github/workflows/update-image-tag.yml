@@ -1,5 +1,4 @@
 name: Update Backend Image Tag
-
 on:
   workflow_dispatch:
     inputs:
@@ -7,15 +6,15 @@ on:
         description: "New Docker Image Tag"
         required: true
         type: string
-
 jobs:
   update-backend-manifest:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
+        with:
+          token: ${{ secrets.GH_PAT }}
+          
       - name: Debug Git Info
         run: |
           echo "Checking current branch..."
@@ -24,17 +23,7 @@ jobs:
           git remote -v
           echo "Checking Git status..."
           git status
-
-      - name: Ensure Main Branch is Up-to-Date
-        run: |
-          git fetch --all
-          git checkout main
-          git pull origin main
-
-      - name: Log Commit ID
-        run: |
-          echo "Received Commit ID: ${{ github.event.inputs.commit_id }}"
-
+          
       - name: Update Image Tag in Backend_dep_ser.yaml
         run: |
           COMMIT_ID=${{ github.event.inputs.commit_id }}
@@ -45,15 +34,11 @@ jobs:
           
           # Show the updated file for debugging
           cat manifest/Backend_dep_ser.yaml
-
+          
       - name: Commit & Push Changes
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          echo "${{ secrets.GH_PAT }}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add manifest/Backend_dep_ser.yaml
-          git commit -m "Updated backend image tag to $COMMIT_ID"
-          git remote add origin https://x-access-token:$GH_PAT@github.com/TharunDD/EKS_Deployment.git
-          git push https://x-access-token:$GH_PAT@github.com/TharunDD/EKS_Deployment.git main
+          git commit -m "Updated backend image tag to ${{ github.event.inputs.commit_id }}"
+          git push
