@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: dtharundev/carb-backend:1234567
+        image: dtharundev/carb-backend:123456769
         ports:
         - containerPort: 3010
 ---
