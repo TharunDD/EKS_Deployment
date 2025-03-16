@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: dtharundev/thecicd:624daaa
+        image: dtharundev/thecicd:7458957
         ports:
         - containerPort: 3010
 ---
